@@ -1,17 +1,24 @@
-const BookItem = ({ title, author, rating, pageCount }) => {
+import { Card } from "react-bootstrap";
+
+import "./BookItem.css";
+
+const BookItem = ({ title, author, rating, pageCount, imageUrl }) => {
     const starAmount = rating?.length;
 
     return (
-        <>
-            <h2>{title}</h2>
-            <h3>{author}</h3>
-            <div>{starAmount} {' '}
-                {starAmount > 1 ?
-                    "estrellas" :
-                    "estrella"}
-            </div>
-            <p>{pageCount} páginas</p>
-        </>
+        <Card className="card-container">
+            <Card.Img height={400} variant="top" src={imageUrl} />
+            <Card.Body>
+                <Card.Title>{title}</Card.Title>
+                <Card.Subtitle>{author}</Card.Subtitle>
+                <div>{starAmount} {' '}
+                    {starAmount > 1 ?
+                        "estrellas" :
+                        "estrella"}
+                </div>
+                <p>{pageCount} páginas</p>
+            </Card.Body>
+        </Card>
     );
 };
 
