@@ -1,4 +1,7 @@
+import { Row } from "react-bootstrap";
+
 import BookList from "./components/bookList/BookList";
+import NewBook from "./components/newBook/NewBook";
 
 const booksArray = [
   {
@@ -37,9 +40,11 @@ const booksArray = [
 
 
 const App = () => {
+
   return (
-    <div>
-      <h2>Book Champions App</h2>
+    <div className="d-flex flex-column align-items-center">
+      <h2 className="my-4">Book Champions App</h2>
+      <NewBook />
       <BookList books={booksArray} />
     </div>
   );
