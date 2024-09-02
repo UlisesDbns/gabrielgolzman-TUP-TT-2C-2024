@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
 
-const NewBook = () => {
+const NewBook = ({ onAddBook }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [rating, setRating] = useState("");
@@ -40,13 +40,18 @@ const NewBook = () => {
     const handleSubmitBook = (event) => {
         event.preventDefault();
         const newBook = {
-            title,
-            author,
+            bookTitle: title,
+            bookAuthor: author,
             rating,
-            pageQty,
+            pageCount: pageQty,
             imageUrl
         };
-        console.log(newBook);
+        onAddBook(newBook);
+        setTitle("");
+        setAuthor("");
+        setRating("");
+        setPageQty("");
+        setImageUrl("");
     };
 
     // const handleTitleChange = (event) => {

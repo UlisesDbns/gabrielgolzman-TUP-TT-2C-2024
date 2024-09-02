@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import BookList from "./components/bookList/BookList";
 import NewBook from "./components/newBook/NewBook";
 
@@ -39,12 +40,22 @@ const booksArray = [
 
 
 const App = () => {
+  const [books, setBooks] = useState(booksArray);
+
+  const handleAddBook = (newBook) => {
+    const bookTransformed = {
+      ...newBook,
+      bookRating: Array(parseInt(newBook.rating, 10)).fill("*"),
+      pageCount: parseInt(newBook.pageCount, 10)
+    };
+    setBooks([bookTransformed, ...books]);
+  };
 
   return (
     <div className="d-flex flex-column align-items-center">
       <h2 className="my-4">Book Champions App</h2>
-      <NewBook />
-      <BookList books={booksArray} />
+      <NewBook onAddBook={handleAddBook} />
+      <BookList books={books} />
     </div>
   );
 };

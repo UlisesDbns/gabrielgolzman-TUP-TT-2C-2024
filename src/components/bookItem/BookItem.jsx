@@ -13,7 +13,7 @@ const BookItem = ({ title, author, rating, pageCount, imageUrl }) => {
 
     return (
         <Card className="card-container">
-            <Card.Img height={400} variant="top" src={imageUrl} />
+            <Card.Img height={400} variant="top" src={imageUrl !== "" ? imageUrl : "https://bit.ly/47NylZk"} />
             <Card.Body>
                 <Card.Title>{bookTitle}</Card.Title>
                 <Card.Subtitle>{author}</Card.Subtitle>
