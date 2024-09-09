@@ -2,6 +2,7 @@
 import { useState } from "react";
 import BookList from "./components/bookList/BookList";
 import NewBook from "./components/newBook/NewBook";
+import Login from "./components/login/Login";
 
 const booksArray = [
   {
@@ -54,8 +55,9 @@ const App = () => {
   return (
     <div className="d-flex flex-column align-items-center">
       <h2 className="my-4">Book Champions App</h2>
-      <NewBook onAddBook={handleAddBook} />
-      <BookList books={books} />
+      {/* <NewBook onAddBook={handleAddBook} />
+      <BookList books={books} /> */}
+      <Login />
     </div>
   );
 };
