@@ -15,16 +15,22 @@ import Protected from "./components/protected/Protected";
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
+  // const navigate = useNavigate
+
   const handleLogin = () => {
     setIsSignedIn(true);
-
   };
+
+  const handleLogout = () => {
+    setIsSignedIn(false);
+  };
+
   const router = createBrowserRouter([
     {
       path: '/',
       element:
         <Protected isSignedIn={isSignedIn}>
-          <Dashboard />
+          <Dashboard onLogout={handleLogout} />
         </Protected>
     },
     {

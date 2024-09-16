@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import BookList from "../bookList/BookList";
 import NewBook from "../newBook/NewBook";
+import { Button, Col, Row } from "react-bootstrap";
 
 const booksArray = [
     {
@@ -38,7 +39,7 @@ const booksArray = [
     },
 ];
 
-const Dashboard = () => {
+const Dashboard = ({ onLogout }) => {
     const [books, setBooks] = useState(booksArray);
 
     const handleAddBook = (newBook) => {
@@ -52,7 +53,15 @@ const Dashboard = () => {
 
     return (
         <>
-            <h2 className="my-4">Book Champions App</h2>
+            <Row className="w-100">
+                <Col />
+                <Col className="d-flex justify-content-center">
+                    <h2 className="my-4">Book Champions App</h2>
+                </Col>
+                <Col className="d-flex justify-content-end align-items-center me-3">
+                    <Button onClick={onLogout}>Cerrar sesión</Button>
+                </Col>
+            </Row>
             <NewBook onAddBook={handleAddBook} />
             <BookList books={books} />
         </>);
