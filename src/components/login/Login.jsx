@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, FormGroup, Row } from
     "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({
@@ -32,7 +32,7 @@ const Login = ({ onLogin }) => {
         }));
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (emailRef.current.value.length === 0) {
             alert("¡Email vacío!");
             emailRef.current.focus();
@@ -52,8 +52,27 @@ const Login = ({ onLogin }) => {
             }));
             return;
         }
-        onLogin();
-        navigate("/");
+        try {
+            const res = await fetch("https://localhost:7120/api/Authentication",
+                {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+            if (!res.ok) {
+                throw res;
+            }
+
+            const data = await res.text();
+            localStorage.setItem("bookchampions-token", data);
+            navigate("/");
+        }
+        catch (error) {
+            console.error(error);
+        }
     };
 
     return (

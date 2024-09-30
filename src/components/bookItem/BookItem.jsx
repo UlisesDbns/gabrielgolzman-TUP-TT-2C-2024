@@ -22,6 +22,7 @@ const BookItem = ({ title, author, rating, pageCount, imageUrl, onTitleUpdated }
                 </div>
                 <p>{pageCount} páginas</p>
                 <Button onClick={handleClick}>Seleccionar</Button>
+                <Button className="ms-3" variant="danger" onClick={() => { }}>Eliminar libro</Button>
             </Card.Body>
         </Card>
     );

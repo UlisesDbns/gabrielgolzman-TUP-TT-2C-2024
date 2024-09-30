@@ -1,7 +1,8 @@
 import { Navigate } from "react-router-dom";
 
-const Protected = ({ isSignedIn, children }) => {
-    if (!isSignedIn) {
+const Protected = ({ children }) => {
+    const token = localStorage.getItem("bookchampions-token");
+    if (!token) {
         return <Navigate to="/login" replace />;
     }
 
