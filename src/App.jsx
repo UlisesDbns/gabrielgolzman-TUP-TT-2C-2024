@@ -8,6 +8,9 @@ import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
 import NotFound from "./components/notFound/NotFound";
+import { AuthContextProvider } from "./components/services/authContext/AuthContext";
+import { TranslationContextProvider } from "./components/services/translationContext/TranslationContext";
+import { ThemeContextProvider } from "./components/services/themeContext/ThemeContext";
 
 // Stlyes
 
@@ -22,7 +25,7 @@ const App = () => {
         </Protected>
     },
     {
-      path: "/login", element: <Login onLogin={() => { }} />
+      path: "/login", element: <Login />
     },
     {
       path: "*", element: <NotFound />
@@ -31,7 +34,13 @@ const App = () => {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <RouterProvider router={router} />
+      <ThemeContextProvider>
+        <TranslationContextProvider>
+          <AuthContextProvider>
+            <RouterProvider router={router} />
+          </AuthContextProvider>
+        </TranslationContextProvider>
+      </ThemeContextProvider>
     </div>
   );
 };

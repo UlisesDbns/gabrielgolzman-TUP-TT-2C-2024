@@ -1,7 +1,11 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Button, Card, Col, Form, FormGroup, Row } from
     "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../services/authContext/AuthContext";
+import ToggleTheme from "../ui/toggleTheme/ToggleTheme";
+import ComboLanguage from "../ui/comboLanguage/ComboLanguage";
+import useTranslation from "../custom/useTranslation/useTranslation";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,9 +15,12 @@ const Login = () => {
         password: false,
     });
 
+    const { handleLogin } = useContext(AuthContext);
+
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
+    const translate = useTranslation();
     const navigate = useNavigate();
 
     const handleChangeEmail = (event) => {
@@ -32,7 +39,7 @@ const Login = () => {
         }));
     };
 
-    const handleLogin = async () => {
+    const handleLoginUser = async () => {
         if (emailRef.current.value.length === 0) {
             alert("¡Email vacío!");
             emailRef.current.focus();
@@ -67,7 +74,7 @@ const Login = () => {
             }
 
             const data = await res.text();
-            localStorage.setItem("bookchampions-token", data);
+            handleLogin(email, data);
             navigate("/");
         }
         catch (error) {
@@ -79,7 +86,13 @@ const Login = () => {
         <Card className="mt-5 mx-3 p-3 px-5 shadow">
             <Card.Body>
                 <Row>
-                    <h5>¡Bienvenidos a Books Champion!</h5>
+                    <ComboLanguage />
+                </Row>
+                <Row>
+                    <ToggleTheme />
+                </Row>
+                <Row>
+                    <h5>{translate('welcome')}</h5>
                 </Row>
                 <Form>
                     <FormGroup className="mb-4">
@@ -110,9 +123,9 @@ const Login = () => {
                     <Col />
                     <Col md={6} className="d-flex justify-content-end">
                         <Button variant="secondary"
-                            onClick={handleLogin}
+                            onClick={handleLoginUser}
                             type="button">
-                            Iniciar sesión
+                            {translate("login")}
                         </Button>
                     </Col>
                 </Row>

@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
 
 import BookList from "../bookList/BookList";
 import NewBook from "../newBook/NewBook";
+import { AuthContext } from "../services/authContext/AuthContext";
 
-const Dashboard = ({ onLogout }) => {
+const Dashboard = () => {
     const [books, setBooks] = useState([]);
+
+    const { user, handleLogout } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -14,7 +17,7 @@ const Dashboard = ({ onLogout }) => {
         fetch("https://localhost:7120/api/Book", {
             headers: {
                 accept: "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("bookchampions-token")}`
+                "Authorization": `Bearer ${user.token}`
             },
         })
             .then(response => response.json())
@@ -56,7 +59,7 @@ const Dashboard = ({ onLogout }) => {
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("bookchampions-token")}`
+                "Authorization": `Bearer ${user.token}`
             },
             body: JSON.stringify(bookToPost)
         })
@@ -71,10 +74,9 @@ const Dashboard = ({ onLogout }) => {
             .catch(error => console.error(error));
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("bookchampions-token");
+    const handleLogoutUser = () => {
+        handleLogout();
         navigate("/login");
-        onLogout();
     };
 
     return (
@@ -85,7 +87,7 @@ const Dashboard = ({ onLogout }) => {
                     <h2 className="my-4">Book Champions App</h2>
                 </Col>
                 <Col className="d-flex justify-content-end align-items-center me-3">
-                    <Button onClick={handleLogout}>Cerrar sesión</Button>
+                    <Button onClick={handleLogoutUser}>Cerrar sesión</Button>
                 </Col>
             </Row>
             <NewBook onAddBook={handleAddBook} />
